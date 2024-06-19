@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Our Bot</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f4; }
+        #chatbox {
+            width: 800px; /* Larger width */
+            height: 600px; /* Larger height */
+            border: 1px solid #ccc;
+            background-color: #fff;
+            overflow-y: auto;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .message {
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .user {
+            background-color: #007bff;
+            color: white;
+            text-align: right;
+            align-self: flex-end;
+        }
+        .bot {
+            background-color: #e1f5fe;
+            text-align: left;
+            align-self: flex-start;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            width: calc(100% - 44px); /* Accounting for padding and margin */
+        }
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <div id="messages" style="flex-grow: 1; overflow-y: auto;"></div>
+        <input type="text" id="userInput" placeholder="Type your message here..." style="flex-shrink: 0;" />
+        <button onclick="sendMessage()" style="flex-shrink: 0;">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const inputBox = document.getElementById('userInput');
+            const userText = inputBox.value;
+            inputBox.value = '';
+
+            if (userText.trim() === '') return;
+
+            displayMessage(userText, 'user');
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=${encodeURIComponent(userText)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                handleBotResponse(data);
+            });
+        }
+
+        function displayMessage(text, className) {
+            const div = document.createElement('div');
+            div.className = `message ${className}`;
+            div.innerHTML = linkify(text);
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.appendChild(div);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight; // Auto-scroll to latest message
+        }
+
+        function handleBotResponse(messages) {
+            messages.forEach(message => {
+                if (message.text) {
+                    displayMessage(message.text, 'bot');
+                }
+                if (message.buttons) {
+                    displayButtons(message.buttons);
+                }
+            });
+        }
+
+        function displayButtons(buttons) {
+            buttons.forEach(button => {
+                const btn = document.createElement('button');
+                btn.textContent = button.title;
+                btn.onclick = function() { sendPayload(button.payload); };
+                const messagesContainer = document.getElementById('messages');
+                messagesContainer.appendChild(btn);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; // Auto-scroll
+            });
+        }
+
+        function sendPayload(payload) {
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `payload=${encodeURIComponent(payload)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                handleBotResponse(data);
+            });
+        }
+
+        function linkify(inputText) {
+            const urlRegex = /(\b(https?:\/\/|www\.)\S*\b)/g;
+            return inputText.replace(urlRegex, function(url) {
+                const hyperlink = url.startsWith('http') ? url : `http://${url}`;
+                return `<a href="${hyperlink}" target="_blank">${url}</a>`;
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,176 @@
+version: "3.1"
+
+stories:
+- story : greeting path 1
+  steps :
+  - intent: greet
+  - action: utter_greet
+  - action: utter_chatbot_intro
+  - action: utter_question_continue
+  - intent: affirm
+  - action: utter_continue_response
+  - action: utter_menu
+  - action: utter_after_menu
+
+- story : greeting path 2
+  steps :
+  - intent: greet
+  - action: utter_greet
+  - action: utter_chatbot_intro
+  - action: utter_question_continue
+  - intent: deny
+  - action: utter_non_continue
+
+- story : anakoinoseis
+  steps :
+  - intent: announcements
+  - action: utter_announcements
+
+- story : odhgos_spoudon
+  steps :
+  - intent: study_guide
+  - action: utter_study_guide
+
+- story : topothesia_sxolhs
+  steps :
+  - intent: ask_ece_location
+  - action: utter_ask_ece_location
+
+- story : erasmus
+  steps :
+  - intent: Erasmus+
+  - action: utter_Erasmus+
+
+- story : programma mathimaton
+  steps :
+  - intent: lessons_schedule
+  - action: utter_lessons_schedule
+
+- story : programma eksetastikhs
+  steps :
+  - intent: exams_schedule
+  - action: utter_exams_schedule
+
+- story : genikes anakoinoseis
+  steps :
+  - intent: general_announcements
+  - action: utter_general_announcements
+
+
+- story : epeigouses anakoinoseis
+  steps :
+  - intent: sos_announcements
+  - action: utter_sos_announcements
+
+- story : proptuxiakes anakoinoseis
+  steps :
+  - intent: undergraduate_announcements
+  - action: utter_undergraduate_announcements
+
+- story : metaptuxiakes anakoinoseis
+  steps :
+  - intent: postgraduate_announcements
+  - action: utter_postgraduate_announcements
+
+- story : alles anakoinoseis
+  steps :
+  - intent: eggrafes_dhloseis_mathimaton_biblia
+  - action: utter_eggrafes_dhloseis_mathimaton_biblia
+
+- story : metaptuxiaka happy path 1
+  steps :
+  - intent: postgraduate_programms_general
+  - action: utter_postgraduate_programms
+  - action: utter_ask_continue_master
+  - intent: affirm
+  - action: utter_ask_to_choose_master
+  - intent: postgraduate_programms_specific
+  - action: action_specific_postgrad
+
+- story : metaptuxiaka happy path 1
+  steps :
+  - intent: postgraduate_programms_general
+  - action: utter_postgraduate_programms
+  - action: utter_ask_continue_master
+  - intent: postgraduate_programms_specific
+  - action: action_specific_postgrad
+
+- story : metaptuxiaka sad path
+  steps :
+    - intent: postgraduate_programms_general
+    - action: utter_postgraduate_programms
+    - action: utter_ask_continue_master
+    - intent: deny
+    - action: utter_anything_else
+
+- story : sugkekrimena metaptuxiaka
+  steps :
+    - intent: postgraduate_programms_specific
+    - action: action_specific_postgrad
+
+- story : bres aithousa
+  steps :
+    - intent: aithouses
+    - action: action_aithousa
+
+- story : akadhmaiko hmerologio
+  steps :
+    - intent: academic_calendar
+    - action: utter_academic_calendar
+
+- story : argies etous
+  steps :
+    - intent: argies
+    - action: action_argies
+
+
+- story : stegash
+  steps:
+    - intent: stegash
+    - action: action_dikaiologhtika_stegashs
+
+- story : sitisi
+  steps:
+    - intent: sitisi
+    - action: action_dikaiologhtika_sitisis
+
+- story : faghto
+  steps:
+    - intent: food_programm
+    - action: utter_food_programm
+
+- story : secretary_info
+  steps:
+    - intent: secretary
+    - action: action_secretary_communication
+
+- story : tomeis
+  steps:
+    - intent: tomeis_general
+    - action: action_tomeis_general
+
+- story : roes_hmty
+  steps:
+    - intent: roes
+    - action: action_roes
+
+
+- story : roes_mathimata
+  steps:
+    - intent: roes_lessons
+    - action: action_roes_lessons
+
+- story : kathigites_mathimata
+  steps:
+    - intent: profs_lessons
+    - action: action_prof_lessons
+
+- story : kathigites_epikoinonia
+  steps:
+    - intent: prof_contact
+    - action: action_prof_contact
+
+- story : didaktikes_monades
+  steps:
+    - intent: ects_per_course
+    - action: action_ects_per_course

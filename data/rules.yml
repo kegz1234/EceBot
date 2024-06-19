@@ -1,0 +1,50 @@
+version: "3.1"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Give the menu everytime the user asks for it
+  steps:
+  - intent: menu
+  - action: utter_menu
+  - action: utter_after_menu
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: thank you
+  steps:
+    - intent: thanks
+    - action: utter_thanks
+    - action: utter_anything_else
+
+
+- rule: Activate programma spoudon form
+  steps:
+  - intent: programma_spoudon
+  - action: programma_spoudon_form
+  - active_loop: programma_spoudon_form
+
+- rule: Submit programma sppoudon form
+  condition:
+  - active_loop: programma_spoudon_form
+  steps:
+  - action: programma_spoudon_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_programma_spoudon
+
+
+
+- rule: Handle low confidence input
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+  - action: utter_rephrase_menu

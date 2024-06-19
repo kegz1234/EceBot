@@ -1,0 +1,398 @@
+version: "3.1"
+
+intents:
+  - greet
+  - language
+  - goodbye
+  - affirm
+  - deny
+  - bot_challenge
+  - menu
+  - thanks
+  - announcements
+  - study_guide
+  - ask_ece_location
+  - Erasmus+
+  - lessons_schedule
+  - exams_schedule
+  - general_announcements
+  - sos_announcements
+  - undergraduate_announcements
+  - postgraduate_announcements
+  - eggrafes_dhloseis_mathimaton_biblia
+  - programma_spoudon
+  - inform_etos_eisagoghs
+  - secretary
+  - postgraduate_programms_general
+  - postgraduate_programms_specific
+  - aithouses
+  - academic_calendar
+  - argies
+  - sitisi
+  - stegash
+  - food_programm
+  - tomeis_general
+  - roes
+  - roes_lessons
+  - profs_lessons
+  - prof_contact
+  - ects_per_course
+
+entities:
+  - erasmus
+  - programma_mathimaton
+  - programma_eksetaseon
+  - genikes_anakoinoseis
+  - epeigouses_anakoinoseis
+  - proptuxiakes_anakoinoseis
+  - metaptuxiakes_anakoinoseis
+  - alles_anakoinoseis
+  - etos_eisagoghs
+  - phone
+  - mail
+  - communication_info
+  - eidos_foithshs
+  - masters
+  - aithousa
+  - semester
+  - exams_period
+  - dorean_sitisi
+  - dorean_stegash
+  - programma_faghtou
+  - orio_eisodhmatos
+  - tomeas
+  - roh
+  - semno
+  - omada
+  - lab
+  - prof
+  - course
+  - ects
+
+
+slots:
+  etos_eisagoghs:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: etos_eisagoghs
+
+  eidos_foithshs:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: eidos_foithshs
+  phone:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: phone
+  mail:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: mail
+
+  communication_info:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: communication_info
+
+  masters:
+    type: list
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: masters
+
+  aithousa:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: aithousa
+
+  semester:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: semester
+
+  exams_period:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: exams_period
+
+  roh:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: roh
+
+  semno:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: semno
+
+
+  omada:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: omada
+
+  lab:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: lab
+
+  prof:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: prof
+
+forms:
+  programma_spoudon_form:
+    required_slots:
+      - etos_eisagoghs
+
+
+
+  semester_start_form:
+    required_slots:
+      - semester
+
+  semester_end_form:
+    required_slots:
+      - semester
+
+  exams_start_form:
+    required_slots:
+      - exams_period
+
+  exams_end_form:
+    required_slots:
+      - exams_period
+
+responses:
+  utter_greet:
+  - text: "Γεία σου 😃!!!"
+  - text: "Καλώς ήλθες 😃"
+  - text: "Χαίρετε 😃"
+
+  utter_chatbot_intro:
+  - text: "Ειμαι το EceBot, ένα chatbot που παρέχει πληροφορίες στα ελλήνικα σχετικά με το τμήμα Ηλεκτρολόγων
+    Μηχανικών και Τεχνολογίας Υπολογιστών του Πανεπιστημίου Πατρών"
+
+  utter_question_continue:
+  - text: "Θα ήθελες να σου δώσω ορισμένες επιλογές πληροφόρησης σχετικά με το τμήμα;"
+    buttons:
+      - title: "Ναι ✔"
+        payload: "/affirm"
+      - title: "Όχι ✖"
+        payload: "/deny"
+
+  utter_continue_response:
+  - text: "Τέλεια 😁"
+  - text: "Περίφημα 😁"
+  utter_non_continue:
+  - text: "Εντάξει, χάρηκα που τα είπαμε😃😃😃!!!Αν με χρειαστείς κάτι άλλο μπορείς να γράψεις 'MENU' για να δεις τις επιλογές σου!!!"
+
+  utter_menu:
+  - text: "Μπορείς να επιλέξεις μία από τις παρακάτω κατηγορίες για να πληροφορηθείς\
+        \ σχετικά ή μπορείς να με ρωτήσεις ότι θέλεις στο πλαίσιο παρακάτω.\n Σε κάθε\
+        \ περίπτωση γράψε 'MENU' για να επανεμφανιστούν οι παρακάτω επιλογές πληροφόρησης."
+    buttons:
+      - title: "ΑΝΑΚΟΙΝΩΣΕΙΣ"
+        payload: "/announcements"
+      - title: "Οδηγός Σπουδών"
+        payload: "/study_guide"
+      - title: "Τοποθεσία Τμήματος ΗΜΤΥ"
+        payload: "/ask_ece_location"
+      - title: "Erasmus +"
+        payload: "/Erasmus+"
+      - title: "Πρόγραμμα Μαθημάτων"
+        payload: "/lessons_schedule"
+      - title: "Πρόγραμμα Εξετάσεων"
+        payload: "/exams_schedule"
+      - title: "Πρόγραμμα Σπουδών"
+        payload: "/programma_spoudon"
+      - title: "Στοιχεία επικοινωνίας γραμματείας"
+        payload: '/secretary{{"communication_info":"στοιχεία επικοινωνίας"}}'
+      - title: "Μεταπτυχιακά Προγράμματα"
+        payload: '/postgraduate_programms_general'
+      - title: "Αίθουσες"
+        payload: '/aithouses'
+      - title: "Ακαδημαϊκό Ημερολόγιο"
+        payload: '/academic_calendar'
+      - title: "Δικαιολογητικά Δωρεάν Σίτισης"
+        payload: '/sitisi'
+      - title: "Δικαιολογητικά Δωρεάν Στέγασης"
+        payload: '/stegash'
+      - title: "Πρόγραμμα Φαγητού"
+        payload: '/food_programm'
+
+  utter_after_menu:
+  - text: |
+      Μπορείς επίσης να μου κάνεις σχετικές ερωτήσεις για τα παρακάτω:
+
+      - ECTS Μαθημάτων: Πληροφορίες σχετικά με τα ECTS (European Credit Transfer and Accumulation System) των διαφόρων μαθημάτων
+      - Στοιχεία Επικοινωνίας και Μαθήματα Καθηγητών: Πληροφορίες για τα στοιχεία επικοινωνίας των καθηγητών, καθώς και τα μαθήματα που διδάσκουν
+      - Μαθήματα και Εργαστήρια ανά Εξάμηνο: Λεπτομέρειες για τα μαθήματα και τα εργαστήρια που προσφέρονται σε κάθε εξάμηνο
+      - Τομείς: Πληροφορίες για τους διάφορους τομείς σπουδών
+      - Κατευθύνσεις: Πληροφορίες για τις διαφορετικές κατευθύνσεις που μπορεί να επιλέξει ένας φοιτητής
+
+  utter_announcements:
+    - text: "Μπορείς να ενημερωθείς για τις ανακοινώσεις του τμήματος ΗΜΤΥ απο το παρακάτω link:\n\
+     \ https://www.ece.upatras.gr/index.php/el/mm-announcements.html \n Πιο συγκεκριμένα μπορείς να πληροφορηθείς για τις παρακάτω κατηγορίες ανακοινώσεων:"
+      buttons:
+        - title: "ΓΕΝΙΚΕΣ ΑΝΑΚΟΙΝΩΣΕΙΣ"
+          payload: "/general_announcements"
+        - title: "ΕΠΕΙΓΟΥΣΕΣ ΑΝΑΚΟΙΝΩΣΕΙΣ"
+          payload: "/sos_announcements"
+        - title: "ΑΝΑΚΟΙΝΩΣΕΙΣ ΠΡΟΠΤΥΧΙΑΚΩΝ ΣΠΟΥΔΩΝ"
+          payload: "/undergraduate_announcements"
+        - title: "ΑΝΑΚΟΙΝΩΣΕΙΣ ΜΕΤΑΠΤΥΧΙΑΚΩΝ ΣΠΟΥΔΩΝ"
+          payload: "/postgraduate_announcements"
+        - title: "ΑΝΑΚΟΙΝΩΣΕΙΣ ΕΠΑΝΕΓΓΡΑΦΗΣ,ΔΗΛΩΣΗΣ ΜΑΘΗΜΑΤΩΝ ΚΑΙ ΣΥΓΓΡΑΜΑΤΩΝ"
+          payload: "/eggrafes_dhloseis_mathimaton_biblia "
+
+
+  utter_general_announcements:
+    - text: "Μπορείς να ενημερωθείς για τις γενικές ανακοινώσεις του τμήματος ΗΜΤΥ απο το παρακάτω link:\n\
+       \ https://www.ece.upatras.gr/index.php/el/mm-announcements.html"
+
+  utter_sos_announcements:
+    - text: "Μπορείς να ενημερωθείς για τις επείγουσες ανακοινώσεις του τμήματος ΗΜΤΥ απο το παρακάτω link:\n\
+         \ https://www.ece.upatras.gr/index.php/el/epeigouses.html"
+
+  utter_undergraduate_announcements:
+    - text: "Μπορείς να ενημερωθείς για τις  ανακοινώσεις προπτυχιακών σπουδών του τμήματος ΗΜΤΥ απο το παρακάτω link:\n\
+         \ https://www.ece.upatras.gr/index.php/el/proptixiaka-an.html"
+
+  utter_postgraduate_announcements:
+    - text: "Μπορείς να ενημερωθείς για τις  ανακοινώσεις μεταπτυχιακών σπουδών του τμήματος ΗΜΤΥ απο το παρακάτω link:\n\
+         \ https://www.ece.upatras.gr/index.php/el/metaptixiaka-an.html"
+
+  utter_eggrafes_dhloseis_mathimaton_biblia:
+    - text: "Μπορείς να ενημερωθείς για  ανακοινώσεις σχετικά με τις εγγραφές τη δήλωση μαθημάτων και τα συγγράμματα απο το παρακάτω link:\n\
+         \ https://www.ece.upatras.gr/index.php/el/eggrafes-diloseis-mathimaton-syggrammata.html"
+
+  utter_study_guide:
+    - text: "Μπορείς να ενημερωθείς για τους οδηγους σπουδων του τμήματος ΗΜΤΥ απο το παρακάτω link:\n\
+      \ https://www.ece.upatras.gr/index.php/el/curriculum.html \n \
+      \ Μπορείς να δεις τον οδηγό σπουδών του έτους 2023-2024 εδώ: https://www.ece.upatras.gr/images/Attachments/odigos_spoudwn/odigos_spoudwn_2023_2024.pdf"
+
+  utter_ask_ece_location:
+    - text: "Το τμήμα Ηλεκτρολόγων Μηχανικών και Τεχνολογίας Υπολογιστών του Πανεπιστημίου Πατρών βρίσκεται στην παρακάτω τοποθεσία:\n \
+    \  https://is.gd/6lahXn   \n
+    Μπορείς να δεις την ακριβή τοποθεσία της σχολής καθώς και τα άλλα κτίρια του Πανεμιστημίου Πατρών στην παρακάτω εικόνα:\n"
+      image: "https://www.ece.upatras.gr/images/IMAGES/ThesiTmimatos.JPG"
+
+
+
+  utter_Erasmus+:
+    - text: "Μπορείς να βρεις ολες τις πληροφορίες που χρειάζεσαι σχετικά με τον υπεύθυνο καθηγητή ,τον τρόπο επικοινωνίας και τα \
+    \ απαραίτητα έγγραφα στο παρακάτω link:\n https://www.ece.upatras.gr/index.php/el/erasmos.html"
+
+  utter_goodbye:
+  - text: "Αντίο!!!"
+  - text: "Τα λέμε!!!"
+  - text: "Αντίο, μέχρι την επόμενη φορά!!!"
+
+  utter_language:
+  - text: "Είμαι ένας ψηφιακός βοηθός που μιλάει ελληνικά"
+
+  utter_iamabot:
+  - text: "Είμαι το EceBot,ένα ελληνικό chatbot που παρέχει πληροφορίες για το τμήμα ΗΜΤΥ"
+
+  utter_lessons_schedule:
+  - text: "Μπορείς να βρείς το πρόγραμμα στο παρακάτω link:\n https://www.ece.upatras.gr/index.php/el/schedule.html"
+
+  utter_exams_schedule:
+    - text: "Μπορείς να βρείς το πρόγραμμα στο παρακάτω link:\n https://www.ece.upatras.gr/index.php/el/schedule.html"
+
+  utter_anything_else:
+    - text: "Θα μπορούσα να σε βοηθήσω σε κάτι άλλο;\nΣε κάθε περίπτωση μπορείς να πληκτρολογήσεις 'ΜΕΝΟΥ' για να δεις τις επιλογές σου; "
+
+  utter_thanks:
+    - text : "Παρακαλώ!!!"
+
+  utter_ask_etos_eisagoghs:
+    - text: "Μπορείς να μου πεις το έτος εισαγωσής σου;"
+
+
+
+  utter_postgraduate_programms:
+    - text: |
+        Το τμήμα ΗΜΤΥ παρέχει τα παρακάτω μεταπτυχιακά προγράμματα:
+        Πράσινη Ηλεκτρική Ενέργεια: Ευφυείς Τεχνολογίες και Στρατηγικές Διαχείρισης,
+        Βιοϊατρική Μηχανική,
+        Αλληλεπίδραση Ανθρώπου-Υπολογιστή,
+        Ολοκληρωμένα Συστήματα Υλικού και Λογισμικού (ΟΣΥΛ),
+        Συστήματα Επεξεργασίας Πληροφορίας και Μηχανική Νοημοσύνη (ΣΜΗΝ).
+
+        Μπορείς να δεις τα διαθέσιμα μεταπτυχιακά της σχολής και στο παρακάτω link:
+        [https://www.ece.upatras.gr/index.php/el/programmata-metaptyxiakon-spoudwn.html](https://www.ece.upatras.gr/index.php/el/programmata-metaptyxiakon-spoudwn.html)
+
+  utter_ask_continue_master:
+    - text: "Θα ήθελες να ενημερωθείς για κάποιο απο τα μεταπτυχικά αυτά;"
+
+  utter_ask_to_choose_master:
+    - text: "Για ποιο μεταπτυχιακό προγραμμα θα ήθελες να σε ενημερωσω;"
+  utter_academic_calendar:
+    - text: "Mπορείς να δεις το ακαδημαικό ημερολόγιο με τις ημερομηνίες έναρξης και λήξης των εξαμήνων,των εξεταστικών καθώς και τις διαθέσιμες αργίες του έτους εδώ:https://www.ece.upatras.gr/index.php/el/academic-calendar"
+
+  utter_ask_semester:
+    - text: "Για ποιό εξάμηνο ενδιαφέρεσαι, το εαρινό ή το χειμερινό; "
+
+  utter_ask_exams_period:
+    - text: "Για ποιά εξεταστική περίοδο ενδιαφέρεσαι, του εαρινού εξαμήνου, του χειμερινού εξαμήνου ή του Σεπτεμβρίου; "
+
+
+
+  utter_food_programm:
+    - text: "Mπορείς να ενημερωθείς για το πρόγραμμα φαγητού της εστίας απο την σελίδα: https://www.upatras.gr/author/fep/"
+
+  utter_please_rephrase:
+    - text: "Συγγνώμη δε σε κατάλαβα,μπορείς να επαναδιατυπώσεις την ερώτηση;"
+
+  utter_rephrase_menu:
+    - text: "Σε κάθε περίπτωση μπορείς να πατήσεις ΜΕΝΟΥ για να δεις τι επιλογές σου"
+
+actions:
+  - action_programma_spoudon
+  - action_secretary_communication
+  - action_specific_postgrad
+  - action_aithousa
+  - action_argies
+  - action_dikaiologhtika_stegashs
+  - action_dikaiologhtika_sitisis
+  - action_tomeis_general
+  - action_roes
+  - action_roes_lessons
+  - action_prof_lessons
+  - action_prof_contact
+  - action_ects_per_course
+  - action_kanonismos_spoudon
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
